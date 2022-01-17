@@ -7,10 +7,9 @@ populateUI();
 let ticketPrice = +selectedMovie.value;
 
 
-
+// get date from local storage and populate UI
 function populateUI(){
     const selectedSeats = JSON.parse(localStorage.getItem('selectedSeats'));
-    console.log(selectedSeats);
     if(selectedSeats !== null && selectedSeats.length > 0){
         seats.forEach((seat, index) => {
             if(selectedSeats.indexOf(index) > -1){
@@ -27,19 +26,20 @@ function populateUI(){
 
 }
 
+// set selected movie and movie price
 function setMovieData(movieIndex, moviePrice){
     localStorage.setItem('selectedMovieIndex', movieIndex);
     localStorage.setItem('selectedMoviePrice', moviePrice);
 }
 
+// update total price and no of seats selected
 function updateSelectedSeat(){
     const selectedSeats = document.querySelectorAll('.row .seat.selected');
     const noOfSeatsSelected = selectedSeats.length;
-    console.log(selectedSeats);
     count.innerHTML = noOfSeatsSelected;
     total.innerHTML = noOfSeatsSelected * ticketPrice;
+    //local storage logic
     const seatsIndex = [...selectedSeats].map((seat => [...seats].indexOf(seat)));
-    console.log(seatsIndex);
     localStorage.setItem('selectedSeats', JSON.stringify(seatsIndex));
 }
  
@@ -56,7 +56,6 @@ seatContainer.addEventListener('click', (event) => {
 if(event.target.classList.contains('seat') &&
 !event.target.classList.contains('occupied')){
 event.target.classList.toggle('selected');
-console.log(event.target);
 updateSelectedSeat();
 }
 });
